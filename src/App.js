@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import jasondata from "./MOCK_DATA.json";
 
 function App() {
+  const [searcItem, setSearchItem] = useState("");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="text"
+        placeholder="Search The name"
+        className="search"
+        onChange={(event) => {
+          setSearchItem(event.target.value);
+        }}
+      />
+      {
+        jasondata.filter((usr) =>{
+          if (searcItem == ""){
+            return usr
+          }else if (usr.first_name.toLowerCase().includes(searcItem.toLowerCase())){
+            return usr
+          }
+        }).map((usr, key) => {
+          return(
+            <div key={key}>
+              <h4>{usr.first_name}</h4>
+            </div>
+          )
+        })
+      }
     </div>
   );
 }
